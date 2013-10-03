@@ -116,6 +116,53 @@ describe("Over.is.*", function(){
     expect(Over.is.string(1)).toEqual(false);
     expect(Over.is.string({})).toEqual(false);
     expect(Over.is.string([])).toEqual(false);
+    expect(Over.is.string(null)).toEqual(false);
+    expect(Over.is.string(undefined)).toEqual(false);
+    expect(Over.is.string(function(){})).toEqual(false);
+
+  });
+
+  it("should work with is.boolean", function(){
+
+    expect(Over.is.boolean("yes")).toEqual(false);
+    expect(Over.is.boolean(true)).toEqual(true);
+    expect(Over.is.boolean(false)).toEqual(true);
+    expect(Over.is.boolean()).toEqual(false);
+    expect(Over.is.boolean(1)).toEqual(false);
+    expect(Over.is.boolean({})).toEqual(false);
+    expect(Over.is.boolean([])).toEqual(false);
+    expect(Over.is.boolean(null)).toEqual(false);
+    expect(Over.is.boolean(undefined)).toEqual(false);
+    expect(Over.is.boolean(function(){})).toEqual(false);
+
+  });
+
+  it("should work with is.bool", function(){
+
+    expect(Over.is.bool("yes")).toEqual(false);
+    expect(Over.is.bool(true)).toEqual(true);
+    expect(Over.is.bool(false)).toEqual(true);
+    expect(Over.is.bool()).toEqual(false);
+    expect(Over.is.bool(1)).toEqual(false);
+    expect(Over.is.bool({})).toEqual(false);
+    expect(Over.is.bool([])).toEqual(false);
+    expect(Over.is.bool(null)).toEqual(false);
+    expect(Over.is.bool(undefined)).toEqual(false);
+    expect(Over.is.bool(function(){})).toEqual(false);
+
+  });
+
+  it("should work with is.function", function(){
+
+    expect(Over.is.function("yes")).toEqual(false);
+    expect(Over.is.function(false)).toEqual(false);
+    expect(Over.is.function()).toEqual(false);
+    expect(Over.is.function(1)).toEqual(false);
+    expect(Over.is.function({})).toEqual(false);
+    expect(Over.is.function([])).toEqual(false);
+    expect(Over.is.function(null)).toEqual(false);
+    expect(Over.is.function(undefined)).toEqual(false);
+    expect(Over.is.function(function(){})).toEqual(true);
 
   });
 
@@ -126,7 +173,10 @@ describe("Over.is.*", function(){
     expect(Over.is.number()).toEqual(false);
     expect(Over.is.number(1)).toEqual(true);
     expect(Over.is.number({})).toEqual(false);
-    expect(Over.is.string([])).toEqual(false);
+    expect(Over.is.number([])).toEqual(false);
+    expect(Over.is.number(null)).toEqual(false);
+    expect(Over.is.number(undefined)).toEqual(false);
+    expect(Over.is.number(function(){})).toEqual(false);
 
   });
 
@@ -138,6 +188,9 @@ describe("Over.is.*", function(){
     expect(Over.is.object(1)).toEqual(false);
     expect(Over.is.object({})).toEqual(true);
     expect(Over.is.object([])).toEqual(false);
+    expect(Over.is.object(null)).toEqual(false);
+    expect(Over.is.object(undefined)).toEqual(false);
+    expect(Over.is.object(function(){})).toEqual(false);
 
   });
 
@@ -149,16 +202,52 @@ describe("Over.is.*", function(){
     expect(Over.is.array(1)).toEqual(false);
     expect(Over.is.array({})).toEqual(false);
     expect(Over.is.array([])).toEqual(true);
+    expect(Over.is.array(null)).toEqual(false);
+    expect(Over.is.array(undefined)).toEqual(false);
+    expect(Over.is.array(function(){})).toEqual(false);
+
+  });
+
+  it("should work with is.null", function(){
+
+    expect(Over.is["null"]("yes")).toEqual(false);
+    expect(Over.is["null"](false)).toEqual(false);
+    expect(Over.is["null"]()).toEqual(false);
+    expect(Over.is["null"](1)).toEqual(false);
+    expect(Over.is["null"]({})).toEqual(false);
+    expect(Over.is["null"]([])).toEqual(false);
+    expect(Over.is["null"](null)).toEqual(true);
+    expect(Over.is["null"](undefined)).toEqual(false);
+    expect(Over.is["null"](function(){})).toEqual(false);
+
+  });
+
+  it("should work with is.undefined", function(){
+
+    expect(Over.is["undefined"]("yes")).toEqual(false);
+    expect(Over.is["undefined"](false)).toEqual(false);
+    expect(Over.is["undefined"]()).toEqual(true);
+    expect(Over.is["undefined"](1)).toEqual(false);
+    expect(Over.is["undefined"]({})).toEqual(false);
+    expect(Over.is["undefined"]([])).toEqual(false);
+    expect(Over.is["undefined"](null)).toEqual(false);
+    expect(Over.is["undefined"](undefined)).toEqual(true);
+    expect(Over.is["undefined"](function(){})).toEqual(false);
 
   });
 
   it("should work with etc", function(){
+
     expect(Over.is.etc("yes")).toEqual(Over.etc);
     expect(Over.is.etc(false)).toEqual(Over.etc);
     expect(Over.is.etc()).toEqual(Over.etc);
     expect(Over.is.etc(1)).toEqual(Over.etc);
     expect(Over.is.etc({})).toEqual(Over.etc);
     expect(Over.is.etc([])).toEqual(Over.etc);
+    expect(Over.is.etc(null)).toEqual(Over.etc);
+    expect(Over.is.etc(undefined)).toEqual(Over.etc);
+    expect(Over.is.etc(function(){})).toEqual(Over.etc);
+
   });
 
 });

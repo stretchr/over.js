@@ -27,13 +27,21 @@
    * An object containing functions that can check individual arguments
    * and make decisions on whether they are indeed something or not.
    */
+  global.Over._isType = function(t,v){ return typeof(v)===t; };
   global.Over.is = {
-    "string": function(v){ return typeof(v)==="string"; },
-    "number": function(v){ return typeof(v)==="number"; },
-    "object": function(v){ return typeof(v)==="object" && typeof(v.length)==="undefined"; },
-    "array": function(v){ return typeof(v)==="object" && typeof(v.length)!=="undefined"; },
+    "string": function(v){ return global.Over._isType("string", v); },
+    "number": function(v){ return global.Over._isType("number", v); },
+    "object": function(v){ return v != null && global.Over._isType("object", v) && typeof(v.length)==="undefined"; },
+    "array": function(v){ return v != null && global.Over._isType("object", v) && typeof(v.length)!=="undefined"; },
+    "boolean": function(v){ return global.Over._isType("boolean", v); },
+    "function": function(v){ return global.Over._isType("function", v); },
+    "null": function(v){ return v === null; },
+    "undefined": function(v){ return global.Over._isType("undefined", v); },
     "etc": function(){ return global.Over.etc; }
   };
+
+  // shortcuts
+  global.Over.is.bool = global.Over.is["boolean"];
 
   /**
    * A special reference object that means whatever the arguments are,

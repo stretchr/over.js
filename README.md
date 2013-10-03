@@ -29,7 +29,7 @@ Built in tests:
   * `$number` - Checks whether the argument is a number or not.
   * `$object` - Checks whether the argument is an object or not (not an array).
   * `$array` - Checks whether the argument is an array or not.
-  * `$bool` - Checks whether the argument is a bool or not.
+  * `$bool` | `$boolean` - Checks whether the argument is a boolean or not (i.e. `true` or `false`).
   * `$function` - Checks whether the argument is a function or not.
   * `$nothing` - Checks whether the argument is `null` or `undefined`.
   * `$null` - Checks whether the argument is `null` or not.
