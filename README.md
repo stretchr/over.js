@@ -1,8 +1,10 @@
 # over.js
 
-Elegant function overloading in JavaScript
+Elegant function overloading in JavaScript.
 
 ## Example
+
+Just wrap your functions with the `Over()` method, and use special argument names to denote types:
 
     var obj = {
 
