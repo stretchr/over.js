@@ -6,6 +6,12 @@ Elegant function overloading in JavaScript
 
     var obj = {
 
+      /**
+       * Says something in the console.
+       *
+       * say(msg) - Says something once.
+       * say(msg, times) - Says something many times.
+       */
       say: Over(
         function(msg$string){
           console.info(msg$string);
