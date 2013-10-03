@@ -132,6 +132,20 @@ describe("Over.is.*", function(){
 
   });
 
+  it("should work with is.nothing", function(){
+
+    expect(Over.is.nothing("yes")).toEqual(false);
+    expect(Over.is.nothing(false)).toEqual(false);
+    expect(Over.is.nothing()).toEqual(true);
+    expect(Over.is.nothing(1)).toEqual(false);
+    expect(Over.is.nothing({})).toEqual(false);
+    expect(Over.is.nothing([])).toEqual(false);
+    expect(Over.is.nothing(null)).toEqual(true);
+    expect(Over.is.nothing(undefined)).toEqual(true);
+    expect(Over.is.nothing(function(){})).toEqual(false);
+
+  });
+
   it("should work with is.boolean", function(){
 
     expect(Over.is.boolean("yes")).toEqual(false);
