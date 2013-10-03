@@ -27,7 +27,7 @@ Just wrap your functions with the `Over()` method, and use special argument name
 
 ### Argument names
 
-    [name]$test
+    [name]${test}
 
 The argument name contains any name (optional), followed by a `$` literal, followed by the type of test that will take place when checking the signature of the function.
 
