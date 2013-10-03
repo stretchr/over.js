@@ -3,6 +3,18 @@
   global.MakeOver = function(){
     return function(){
 
+      // get the mapping
+      var $map = global.Over.map.apply(this, arguments);
+
+      return function(){
+
+        for (var i in $map) {
+          if (global.Over.test($map[i].sig, arguments)) {
+            return $map[i].func.apply(this, arguments);
+          }
+        }
+      };
+
     };
   };
 
@@ -30,11 +42,29 @@
   global.Over.etc = {};
 
   /**
+   * Creates a list of signatures mapped to the handler functions.
+   */
+  global.Over.map = function(){
+
+    var items = [];
+
+    for (var i in arguments) {
+      var func = arguments[i];
+      items.push({
+        "sig": global.Over.signature(func),
+        "func": func
+      });
+    }
+
+    return items;
+
+  };
+
+  /**
    * Checks arguments against a signature array.
    */
   global.Over.test = function(sig, args){
 
-    var result = true;
     for (var i = 0; i < Math.max(sig.length, args.length); i++) {
 
       var sigItem = sig[i];
@@ -45,9 +75,11 @@
         return false;
       }
 
+      var result;
       try {
         result = sigItem(argItem);
       } catch(e) {
+        console.warn(e)
         return false;
       }
 
@@ -59,7 +91,7 @@
 
     }
 
-    return result;
+    return true;
   };
 
   /**
@@ -72,7 +104,11 @@
     var args = global.Over.argnames(f);
     for (var argI in args) {
       var arg = args[argI];
-      sig.push(global.Over.is[global.Over.checkFuncFromArg(arg)]);
+      var checker = global.Over.is[global.Over.checkFuncFromArg(arg)];
+      if (typeof(checker)==="undefined") {
+        console.warn("over.js: Unknown checker for '" + arg + "'.  Try adding Over.is[\"" + arg + "\"] = function(v){};")
+      }
+      sig.push(checker);
     }
 
     return sig;
@@ -83,7 +119,9 @@
    * Gets the names of all
    */
   global.Over.argnames = function(f){
-    return f.toString().split("(")[1].split(")")[0].split(", ");
+    var names = f.toString().split("(")[1].split(")")[0].split(",");
+    for (var i in names) names[i] = names[i].replace(/^\s+|\s+$/g, '');
+    return names;
   };
 
   /**
