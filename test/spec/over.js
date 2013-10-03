@@ -3,48 +3,58 @@ describe("Over should work", function(){
   it("should call the appropriate method", function(){
 
     var calls = {};
-    var f = Over(
+    var lastThis = null;
+    var obj = {};
+    obj.f = Over(
 
       function($string, $number){
         calls["one"] = calls["one"] || [];
         calls["one"].push(arguments);
+        lastThis = this;
         return "one";
       },
       function($string){
         calls["two"] = calls["two"] || [];
         calls["two"].push(arguments);
+        lastThis = this;
         return "two";
       },
       function($object, $array){
         calls["three"] = calls["three"] || [];
         calls["three"].push(arguments);
+        lastThis = this;
         return "three";
       },
       function($etc){
         calls["four"] = calls["four"] || [];
         calls["four"].push(arguments);
+        lastThis = this;
         return "four";
       }
 
     );
 
-    expect(f("Mat", 30)).toEqual("one");
+    expect(obj.f("Mat", 30)).toEqual("one");
     expect(calls["one"][0][0]).toEqual("Mat");
     expect(calls["one"][0][1]).toEqual(30);
+    expect(lastThis).toEqual(obj);
 
-    expect(f("Ryan")).toEqual("two");
+    expect(obj.f("Ryan")).toEqual("two");
     expect(calls["two"][0][0]).toEqual("Ryan");
+    expect(lastThis).toEqual(obj);
 
-    var obj = {}, arr = [];
-    expect(f(obj, arr)).toEqual("three");
-    expect(calls["three"][0][0]).toEqual(obj);
-    expect(calls["three"][0][1]).toEqual(arr);
+    var anObj = {}, anArr = [];
+    expect(obj.f(anObj, anArr)).toEqual("three");
+    expect(calls["three"][0][0]).toEqual(anObj);
+    expect(calls["three"][0][1]).toEqual(anArr);
+    expect(lastThis).toEqual(obj);
 
-    expect(f("Anything else", 1, 2, 3)).toEqual("four");
+    expect(obj.f("Anything else", 1, 2, 3)).toEqual("four");
     expect(calls["four"][0][0]).toEqual("Anything else");
     expect(calls["four"][0][1]).toEqual(1);
     expect(calls["four"][0][2]).toEqual(2);
     expect(calls["four"][0][3]).toEqual(3);
+    expect(lastThis).toEqual(obj);
 
   });
 
