@@ -56,7 +56,7 @@ describe("Over.test", function(){
 
   it("should deal with the $etc shortcut", function(){
 
-    var sig = Over.signature(function(name$string, $etc){})
+    var sig = Over.signature(function(name$string, $etc){});
 
     var arguments = ["str", 0, {}, "extra"];
     expect(Over.test(sig, arguments)).toEqual(true);
