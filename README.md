@@ -10,8 +10,8 @@ Elegant function overloading in JavaScript
         function(msg$string){
           console.info(msg$string);
         },
-        function(msg$string, times$string){
-          for (var i = 0; i < times$string; i++) this.say(msg$string);
+        function(msg$string, times$number){
+          for (var i = 0; i < times$number; i++) this.say(msg$string);
         }
       )
 
