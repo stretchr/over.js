@@ -18,7 +18,8 @@
   global.Over.is = {
     "string": function(v){ return typeof(v)==="string"; },
     "number": function(v){ return typeof(v)==="number"; },
-    "object": function(v){ return typeof(v)==="object"; },
+    "object": function(v){ return typeof(v)==="object" && typeof(v.length)==="undefined"; },
+    "array": function(v){ return typeof(v)==="object" && typeof(v.length)!=="undefined"; },
     "etc": function(){ return global.Over.etc; }
   };
 

@@ -12,6 +12,63 @@ describe("Over.argnames", function(){
 
 });
 
+describe("Over.is.*", function(){
+
+  it("should work with is.string", function(){
+
+    expect(Over.is.string("yes")).toEqual(true);
+    expect(Over.is.string(false)).toEqual(false);
+    expect(Over.is.string()).toEqual(false);
+    expect(Over.is.string(1)).toEqual(false);
+    expect(Over.is.string({})).toEqual(false);
+    expect(Over.is.string([])).toEqual(false);
+
+  });
+
+  it("should work with is.number", function(){
+
+    expect(Over.is.number("yes")).toEqual(false);
+    expect(Over.is.number(false)).toEqual(false);
+    expect(Over.is.number()).toEqual(false);
+    expect(Over.is.number(1)).toEqual(true);
+    expect(Over.is.number({})).toEqual(false);
+    expect(Over.is.string([])).toEqual(false);
+
+  });
+
+  it("should work with is.object", function(){
+
+    expect(Over.is.object("yes")).toEqual(false);
+    expect(Over.is.object(false)).toEqual(false);
+    expect(Over.is.object()).toEqual(false);
+    expect(Over.is.object(1)).toEqual(false);
+    expect(Over.is.object({})).toEqual(true);
+    expect(Over.is.object([])).toEqual(false);
+
+  });
+
+  it("should work with is.array", function(){
+
+    expect(Over.is.array("yes")).toEqual(false);
+    expect(Over.is.array(false)).toEqual(false);
+    expect(Over.is.array()).toEqual(false);
+    expect(Over.is.array(1)).toEqual(false);
+    expect(Over.is.array({})).toEqual(false);
+    expect(Over.is.array([])).toEqual(true);
+
+  });
+
+  it("should work with etc", function(){
+    expect(Over.is.etc("yes")).toEqual(Over.etc);
+    expect(Over.is.etc(false)).toEqual(Over.etc);
+    expect(Over.is.etc()).toEqual(Over.etc);
+    expect(Over.is.etc(1)).toEqual(Over.etc);
+    expect(Over.is.etc({})).toEqual(Over.etc);
+    expect(Over.is.etc([])).toEqual(Over.etc);
+  });
+
+});
+
 describe("Over.signature", function(){
 
   it("should get an array of check functions from argument names", function(){
