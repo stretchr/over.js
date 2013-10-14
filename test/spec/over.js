@@ -1,5 +1,10 @@
 describe("Over should work", function(){
 
+  it("should know its version", function(){
+    expect(Over.version).toEqual(1);
+    expect(Over.versionString).toEqual("v1.0.0");
+  });
+
   it("should call the appropriate method", function(){
 
     var calls = {};
@@ -274,6 +279,41 @@ describe("Over.is.*", function(){
 
   });
 
+
+  it("should group all remaining arguments into an $etc array - https://github.com/stretchr/over.js/issues/1", function(){
+
+    var calls = [];
+    var sig = Over(function(name$string, $etc){
+      calls.push(arguments);
+    });
+
+    sig("name", 1, 2, 3, "four");
+
+    expect(calls.length).toEqual(1)
+    expect(calls[0].length).toEqual(2)
+    expect(calls[0][1].length).toEqual(4)
+    expect(calls[0][1][0]).toEqual(1);
+    expect(calls[0][1][1]).toEqual(2);
+    expect(calls[0][1][2]).toEqual(3);
+    expect(calls[0][1][3]).toEqual("four");
+
+  });
+
+  it("should send in an empty array if there are no additional arguments - https://github.com/stretchr/over.js/issues/1", function(){
+
+    var calls = [];
+    var sig = Over(function(name$string, $etc){
+      calls.push(arguments);
+    });
+
+    sig("name");
+
+    expect(calls.length).toEqual(1)
+    expect(calls[0].length).toEqual(2)
+    expect(calls[0][1].length).toEqual(0)
+
+  });
+
 });
 
 describe("Over.signature", function(){
@@ -345,40 +385,6 @@ describe("Over.test", function(){
 
     var arguments = [0];
     expect(Over.test(sig, arguments)).toEqual(false);
-
-  });
-
-  it("should group all remaining arguments into an $etc array - https://github.com/stretchr/over.js/issues/1", function(){
-
-    var calls = [];
-    var sig = Over(function(name$string, $etc){
-      calls.push(arguments);
-    });
-
-    sig("name", 1, 2, 3, "four");
-
-    expect(calls.length).toEqual(1)
-    expect(calls[0].length).toEqual(2)
-    expect(calls[0][1].length).toEqual(4)
-    expect(calls[0][1][0]).toEqual(1);
-    expect(calls[0][1][1]).toEqual(2);
-    expect(calls[0][1][2]).toEqual(3);
-    expect(calls[0][1][3]).toEqual("four");
-
-  });
-
-  it("should send in an empty array if there are no additional arguments - https://github.com/stretchr/over.js/issues/1", function(){
-
-    var calls = [];
-    var sig = Over(function(name$string, $etc){
-      calls.push(arguments);
-    });
-
-    sig("name");
-
-    expect(calls.length).toEqual(1)
-    expect(calls[0].length).toEqual(2)
-    expect(calls[0][1].length).toEqual(0)
 
   });
 

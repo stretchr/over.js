@@ -1,6 +1,6 @@
 /*
 
-  over.js - BETA
+  over.js - v1
   Elegant function overloading in JavaScript.
 
   by Mat Ryer and Ryan Quinn
@@ -67,6 +67,16 @@
    * MakeOver makes a new Over function (useful for testing).
    */
   global.Over = global.MakeOver();
+
+  /**
+   * The current version.
+   */
+  global.Over.version = 1;
+
+  /**
+   * The current version as a string.
+   */
+  global.Over.versionString = "v1.0.0";
 
   /**
    * An object containing functions that can check individual arguments
