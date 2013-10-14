@@ -367,4 +367,19 @@ describe("Over.test", function(){
 
   });
 
+  it("should send in an empty array if there are no additional arguments - https://github.com/stretchr/over.js/issues/1", function(){
+
+    var calls = [];
+    var sig = Over(function(name$string, $etc){
+      calls.push(arguments);
+    });
+
+    sig("name");
+
+    expect(calls.length).toEqual(1)
+    expect(calls[0].length).toEqual(2)
+    expect(calls[0][1].length).toEqual(0)
+
+  });
+
 });

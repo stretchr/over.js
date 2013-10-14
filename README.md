@@ -68,7 +68,7 @@ Built in tests:
 
 #### The special `$etc` kind
 
-If you use `anything$etc`, it will allow any kind of argument (or no argument at all), and any arguments following it.
+If you use `anything$etc`, it will allow any kind of argument (or no argument at all), and any arguments following it.  All remaining arguments will be collected into an array, which will become the value for `anything$etc`.  So you can check for the length of additional arguments by doing `anything$etc.length`.
 
 ### Adding your own
 
