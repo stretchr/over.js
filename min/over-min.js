@@ -1,6 +1,6 @@
 /*
 
-  over.js - BETA
+  over.js - v1
   Elegant function overloading in JavaScript.
 
   by Mat Ryer and Ryan Quinn
