@@ -37,6 +37,24 @@
 
         for (var i in $map) {
           if (global.Over.test($map[i].sig, arguments)) {
+
+            var sig = $map[i].sig;
+            if (sig[sig.length-1] === global.Over.is.etc) {
+              // collect all $etc arguments
+
+              var args = [];
+              var etcArr = [];
+              for (var ietc = 0; ietc < sig.length-1; ietc++) {
+                args.push(arguments[ietc]);
+              }
+              for (var ietc = sig.length-1; ietc < arguments.length; ietc++) {
+                etcArr.push(arguments[ietc]);
+              }
+              args.push(etcArr);
+              arguments = args;
+
+            }
+
             return $map[i].func.apply(this, arguments);
           }
         }

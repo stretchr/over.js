@@ -50,10 +50,10 @@ describe("Over should work", function(){
     expect(lastThis).toEqual(obj);
 
     expect(obj.f("Anything else", 1, 2, 3)).toEqual("four");
-    expect(calls["four"][0][0]).toEqual("Anything else");
-    expect(calls["four"][0][1]).toEqual(1);
-    expect(calls["four"][0][2]).toEqual(2);
-    expect(calls["four"][0][3]).toEqual(3);
+    expect(calls["four"][0][0][0]).toEqual("Anything else");
+    expect(calls["four"][0][0][1]).toEqual(1);
+    expect(calls["four"][0][0][2]).toEqual(2);
+    expect(calls["four"][0][0][3]).toEqual(3);
     expect(lastThis).toEqual(obj);
 
   });
@@ -345,6 +345,25 @@ describe("Over.test", function(){
 
     var arguments = [0];
     expect(Over.test(sig, arguments)).toEqual(false);
+
+  });
+
+  it("should group all remaining arguments into an $etc array - https://github.com/stretchr/over.js/issues/1", function(){
+
+    var calls = [];
+    var sig = Over(function(name$string, $etc){
+      calls.push(arguments);
+    });
+
+    sig("name", 1, 2, 3, "four");
+
+    expect(calls.length).toEqual(1)
+    expect(calls[0].length).toEqual(2)
+    expect(calls[0][1].length).toEqual(4)
+    expect(calls[0][1][0]).toEqual(1);
+    expect(calls[0][1][1]).toEqual(2);
+    expect(calls[0][1][2]).toEqual(3);
+    expect(calls[0][1][3]).toEqual("four");
 
   });
 
