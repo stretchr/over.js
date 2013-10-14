@@ -1,6 +1,6 @@
 /*
 
-  over.js - v1
+  over.js - v1.1
   Elegant function overloading in JavaScript.
 
   by Mat Ryer and Ryan Quinn
@@ -71,12 +71,12 @@
   /**
    * The current version.
    */
-  global.Over.version = 1;
+  global.Over.version = 1.1;
 
   /**
    * The current version as a string.
    */
-  global.Over.versionString = "v1.0.0";
+  global.Over.versionString = "v1.1.0";
 
   /**
    * An object containing functions that can check individual arguments

@@ -1,8 +1,8 @@
 describe("Over should work", function(){
 
   it("should know its version", function(){
-    expect(Over.version).toEqual(1);
-    expect(Over.versionString).toEqual("v1.0.0");
+    expect(Over.version).toEqual(1.1);
+    expect(Over.versionString).toEqual("v1.1.0");
   });
 
   it("should call the appropriate method", function(){
