@@ -6,47 +6,49 @@ Elegant function overloading in JavaScript.
 
 Just wrap your functions with the `Over()` method, and use special argument names to denote types:
 
-    var obj = {
+```javascript
+var obj = {
 
-      /**
-       * Says something in the console.
-       *
-       * say(msg) - Says something once.
-       * say(msg, times) - Says something many times.
-       */
-      say: Over(
+  /**
+   * Says something in the console.
+   *
+   * say(msg) - Says something once.
+   * say(msg, times) - Says something many times.
+   */
+  say: Over(
 
-        // one string
-        function(msg$string){
+    // one string
+    function(msg$string){
 
-          // say it in the console
-          console.info(msg$string);
+      // say it in the console
+      console.info(msg$string);
 
-        },
+    },
 
-        // a string and a number
-        function(msg$string, times$number){
+    // a string and a number
+    function(msg$string, times$number){
 
-          // say the message times$number times
-          for (var i = 0; i < times$number; i++) this.say(msg$string);
+      // say the message times$number times
+      for (var i = 0; i < times$number; i++) this.say(msg$string);
 
-        },
+    },
 
-        // then everything else
-        function(msg$string, everything$etc) {
+    // then everything else
+    function(msg$string, everything$etc) {
 
-          // say the string
-          this.say(msg$string);
+      // say the string
+      this.say(msg$string);
 
-          // now say all remaining arguments
-          for (var i in everything$etc) {
-            this.say(everything$etc[i])
-          }
+      // now say all remaining arguments
+      for (var i in everything$etc) {
+        this.say(everything$etc[i])
+      }
 
-        }
-      )
+    }
+  )
 
-    };
+};
+```
 
 ### Argument names
 
