@@ -25,29 +25,59 @@
   DEALINGS IN THE SOFTWARE.
 
 */
+
 (function(global){
 
-  global.MakeOver = function(){
+  /** Used to determine if values are of the language type Object */
+  var objectTypes = {
+    'boolean': false,
+    'function': true,
+    'object': true,
+    'number': false,
+    'string': false,
+    'undefined': false
+  };
+
+  /** Used as a reference to the global object */
+  var root = (objectTypes[typeof window] && window) || this;
+
+  /** Detect free variable `exports` */
+  var freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports;
+
+  /** Detect free variable `module` */
+  var freeModule = objectTypes[typeof module] && module && !module.nodeType && module;
+
+  /** Detect the popular CommonJS extension `module.exports` */
+  var moduleExports = freeModule && freeModule.exports === freeExports && freeExports;
+
+  /** Detect free variable `global` from Node.js or Browserified code and use it as `root` */
+  var freeGlobal = objectTypes[typeof global] && global;
+  if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)) {
+    root = freeGlobal;
+  }
+
+  root.MakeOver = function(){
     return function(){
 
       // get the mapping
-      var $map = global.Over.map.apply(this, arguments);
+      var $map = root.Over.map.apply(this, arguments);
 
       return function(){
 
         for (var i in $map) {
-          if (global.Over.test($map[i].sig, arguments)) {
+          if (root.Over.test($map[i].sig, arguments)) {
 
             var sig = $map[i].sig;
-            if (sig[sig.length-1] === global.Over.is.etc) {
+            if (sig[sig.length-1] === root.Over.is.etc) {
               // collect all $etc arguments
 
               var args = [];
               var etcArr = [];
-              for (var ietc = 0; ietc < sig.length-1; ietc++) {
+              var iets;
+              for (ietc = 0; ietc < sig.length-1; ietc++) {
                 args.push(arguments[ietc]);
               }
-              for (var ietc = sig.length-1; ietc < arguments.length; ietc++) {
+              for (ietc = sig.length - 1; ietc < arguments.length; ietc++) {
                 etcArr.push(arguments[ietc]);
               }
               args.push(etcArr);
@@ -66,56 +96,56 @@
   /**
    * MakeOver makes a new Over function (useful for testing).
    */
-  global.Over = global.MakeOver();
+  root.Over = root.MakeOver();
 
   /**
    * The current version.
    */
-  global.Over.version = 1.1;
+  root.Over.version = 1.1;
 
   /**
    * The current version as a string.
    */
-  global.Over.versionString = "v1.1.0";
+  root.Over.versionString = "v1.1.0";
 
   /**
    * An object containing functions that can check individual arguments
    * and make decisions on whether they are indeed something or not.
    */
-  global.Over._isType = function(t,v){ return typeof(v)===t; };
-  global.Over.is = {
-    "string": function(v){ return global.Over._isType("string", v); },
-    "number": function(v){ return global.Over._isType("number", v); },
-    "object": function(v){ return v != null && global.Over._isType("object", v) && typeof(v.length)==="undefined"; },
-    "array": function(v){ return v != null && global.Over._isType("object", v) && typeof(v.length)!=="undefined"; },
-    "boolean": function(v){ return global.Over._isType("boolean", v); },
-    "function": function(v){ return global.Over._isType("function", v); },
+  root.Over._isType = function(t,v){ return typeof(v)===t; };
+  root.Over.is = {
+    "string": function(v){ return root.Over._isType("string", v); },
+    "number": function(v){ return root.Over._isType("number", v); },
+    "object": function(v){ return v !== null && root.Over._isType("object", v) && typeof(v.length)==="undefined"; },
+    "array": function(v){ return v !== null && root.Over._isType("object", v) && typeof(v.length)!=="undefined"; },
+    "boolean": function(v){ return root.Over._isType("boolean", v); },
+    "function": function(v){ return root.Over._isType("function", v); },
     "null": function(v){ return v === null; },
-    "undefined": function(v){ return global.Over._isType("undefined", v); },
-    "nothing": function(v){ return global.Over.is["null"](v) || global.Over.is["undefined"](v) },
-    "etc": function(){ return global.Over.etc; }
+    "undefined": function(v){ return root.Over._isType("undefined", v); },
+    "nothing": function(v){ return root.Over.is["null"](v) || root.Over.is["undefined"](v); },
+    "etc": function(){ return root.Over.etc; }
   };
 
   // shortcuts
-  global.Over.is.bool = global.Over.is["boolean"];
+  root.Over.is.bool = root.Over.is.boolean;
 
   /**
    * A special reference object that means whatever the arguments are,
    * they're OK.
    */
-  global.Over.etc = {};
+  root.Over.etc = {};
 
   /**
    * Creates a list of signatures mapped to the handler functions.
    */
-  global.Over.map = function(){
+  root.Over.map = function(){
 
     var items = [];
 
     for (var i in arguments) {
       var func = arguments[i];
       items.push({
-        "sig": global.Over.signature(func),
+        "sig": root.Over.signature(func),
         "func": func
       });
     }
@@ -127,7 +157,7 @@
   /**
    * Checks arguments against a signature array.
    */
-  global.Over.test = function(sig, args){
+  root.Over.test = function(sig, args){
 
     for (var i = 0; i < Math.max(sig.length, args.length); i++) {
 
@@ -149,7 +179,7 @@
 
       if (result === false) {
         return false;
-      } else if (result === global.Over.etc) {
+      } else if (result === root.Over.etc) {
         return true;
       }
 
@@ -162,15 +192,15 @@
    * Gets an array of is methods to be called to test a
    * method call, based on the specified function.
    */
-  global.Over.signature = function(f){
+  root.Over.signature = function(f){
 
     var sig = [];
-    var args = global.Over.argnames(f);
+    var args = root.Over.argnames(f);
     for (var argI in args) {
       var arg = args[argI];
-      var checker = global.Over.is[global.Over.checkFuncFromArg(arg)];
+      var checker = root.Over.is[root.Over.checkFuncFromArg(arg)];
       if (typeof(checker)==="undefined") {
-        console.warn("over.js: Unknown checker for '" + arg + "'.  Try adding Over.is[\"" + arg + "\"] = function(v){};")
+        console.warn("over.js: Unknown checker for '" + arg + "'.  Try adding Over.is[\"" + arg + "\"] = function(v){};");
       }
       sig.push(checker);
     }
@@ -182,7 +212,7 @@
   /**
    * Gets the names of all
    */
-  global.Over.argnames = function(f){
+  root.Over.argnames = function(f){
     var names = f.toString().split("(")[1].split(")")[0].split(",");
     for (var i in names) names[i] = names[i].replace(/^\s+|\s+$/g, '');
     return names;
@@ -191,8 +221,8 @@
   /**
    * Gets the name of the checker func from an argument.r
    */
-  global.Over.checkFuncFromArg = function(arg){
+  root.Over.checkFuncFromArg = function(arg){
     return arg.split("$")[1];
-  }
+  };
 
-})(window);
+}).call(this);

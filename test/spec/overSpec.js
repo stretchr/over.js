@@ -1,3 +1,6 @@
+var Over;
+    Over = typeof require === 'function' ? require('../../src/over.js').Over : Over;
+
 describe("Over should work", function(){
 
   it("should know its version", function(){
@@ -13,26 +16,26 @@ describe("Over should work", function(){
     obj.f = Over(
 
       function($string, $number){
-        calls["one"] = calls["one"] || [];
-        calls["one"].push(arguments);
+        calls.one = calls.one || [];
+        calls.one.push(arguments);
         lastThis = this;
         return "one";
       },
       function($string){
-        calls["two"] = calls["two"] || [];
-        calls["two"].push(arguments);
+        calls.two = calls.two || [];
+        calls.two.push(arguments);
         lastThis = this;
         return "two";
       },
       function($object, $array){
-        calls["three"] = calls["three"] || [];
-        calls["three"].push(arguments);
+        calls.three = calls.three || [];
+        calls.three.push(arguments);
         lastThis = this;
         return "three";
       },
       function($etc){
-        calls["four"] = calls["four"] || [];
-        calls["four"].push(arguments);
+        calls.four = calls.four || [];
+        calls.four.push(arguments);
         lastThis = this;
         return "four";
       }
@@ -40,25 +43,25 @@ describe("Over should work", function(){
     );
 
     expect(obj.f("Mat", 30)).toEqual("one");
-    expect(calls["one"][0][0]).toEqual("Mat");
-    expect(calls["one"][0][1]).toEqual(30);
+    expect(calls.one[0][0]).toEqual("Mat");
+    expect(calls.one[0][1]).toEqual(30);
     expect(lastThis).toEqual(obj);
 
     expect(obj.f("Ryan")).toEqual("two");
-    expect(calls["two"][0][0]).toEqual("Ryan");
+    expect(calls.two[0][0]).toEqual("Ryan");
     expect(lastThis).toEqual(obj);
 
     var anObj = {}, anArr = [];
     expect(obj.f(anObj, anArr)).toEqual("three");
-    expect(calls["three"][0][0]).toEqual(anObj);
-    expect(calls["three"][0][1]).toEqual(anArr);
+    expect(calls.three[0][0]).toEqual(anObj);
+    expect(calls.three[0][1]).toEqual(anArr);
     expect(lastThis).toEqual(obj);
 
     expect(obj.f("Anything else", 1, 2, 3)).toEqual("four");
-    expect(calls["four"][0][0][0]).toEqual("Anything else");
-    expect(calls["four"][0][0][1]).toEqual(1);
-    expect(calls["four"][0][0][2]).toEqual(2);
-    expect(calls["four"][0][0][3]).toEqual(3);
+    expect(calls.four[0][0][0]).toEqual("Anything else");
+    expect(calls.four[0][0][1]).toEqual(1);
+    expect(calls.four[0][0][2]).toEqual(2);
+    expect(calls.four[0][0][3]).toEqual(3);
     expect(lastThis).toEqual(obj);
 
   });
@@ -289,9 +292,9 @@ describe("Over.is.*", function(){
 
     sig("name", 1, 2, 3, "four");
 
-    expect(calls.length).toEqual(1)
-    expect(calls[0].length).toEqual(2)
-    expect(calls[0][1].length).toEqual(4)
+    expect(calls.length).toEqual(1);
+    expect(calls[0].length).toEqual(2);
+    expect(calls[0][1].length).toEqual(4);
     expect(calls[0][1][0]).toEqual(1);
     expect(calls[0][1][1]).toEqual(2);
     expect(calls[0][1][2]).toEqual(3);
@@ -308,9 +311,9 @@ describe("Over.is.*", function(){
 
     sig("name");
 
-    expect(calls.length).toEqual(1)
-    expect(calls[0].length).toEqual(2)
-    expect(calls[0][1].length).toEqual(0)
+    expect(calls.length).toEqual(1);
+    expect(calls[0].length).toEqual(2);
+    expect(calls[0][1].length).toEqual(0);
 
   });
 
@@ -320,7 +323,7 @@ describe("Over.signature", function(){
 
   it("should get an array of check functions from argument names", function(){
 
-    var sig = Over.signature(function(name$string, age$number, something$object){})
+    var sig = Over.signature(function(name$string, age$number, something$object){});
     expect(sig[0]).toEqual(Over.is.string);
     expect(sig[1]).toEqual(Over.is.number);
     expect(sig[2]).toEqual(Over.is.object);
@@ -333,40 +336,40 @@ describe("Over.test", function(){
 
   it("should know when they match", function(){
 
-    var sig = Over.signature(function(name$string, age$number, something$object){})
+    var sig = Over.signature(function(name$string, age$number, something$object){});
 
-    var arguments = ["str", 0, {}];
-    expect(Over.test(sig, arguments)).toEqual(true);
+    var args = ["str", 0, {}];
+    expect(Over.test(sig, args)).toEqual(true);
 
-    var arguments = ["str", 0];
-    expect(Over.test(sig, arguments)).toEqual(false);
+    args = ["str", 0];
+    expect(Over.test(sig, args)).toEqual(false);
 
-    var arguments = ["str"];
-    expect(Over.test(sig, arguments)).toEqual(false);
+    args = ["str"];
+    expect(Over.test(sig, args)).toEqual(false);
 
-    var arguments = [];
-    expect(Over.test(sig, arguments)).toEqual(false);
+    args = [];
+    expect(Over.test(sig, args)).toEqual(false);
 
   });
 
-  it("should cope when there are more arguments than signature items", function(){
+  it("should cope when there are more args than signature items", function(){
 
-    var sig = Over.signature(function(name$string, age$number, something$object){})
+    var sig = Over.signature(function(name$string, age$number, something$object){});
 
-    var arguments = ["str", 0, {}, "extra"];
-    expect(Over.test(sig, arguments)).toEqual(false);
+    var args = ["str", 0, {}, "extra"];
+    expect(Over.test(sig, args)).toEqual(false);
 
   });
 
   it("should be strict when there's no $etc", function(){
 
-    var sig = Over.signature(function($string){})
+    var sig = Over.signature(function($string){});
 
-    var arguments = ["str", 1];
-    expect(Over.test(sig, arguments)).toEqual(false);
+    var args = ["str", 1];
+    expect(Over.test(sig, args)).toEqual(false);
 
-    var arguments = ["str"];
-    expect(Over.test(sig, arguments)).toEqual(true);
+    args = ["str"];
+    expect(Over.test(sig, args)).toEqual(true);
 
   });
 
@@ -374,17 +377,17 @@ describe("Over.test", function(){
 
     var sig = Over.signature(function(name$string, $etc){});
 
-    var arguments = ["str", 0, {}, "extra"];
-    expect(Over.test(sig, arguments)).toEqual(true);
+    var args = ["str", 0, {}, "extra"];
+    expect(Over.test(sig, args)).toEqual(true);
 
-    var arguments = ["str", "extra"];
-    expect(Over.test(sig, arguments)).toEqual(true);
+    args = ["str", "extra"];
+    expect(Over.test(sig, args)).toEqual(true);
 
-    var arguments = ["str"];
-    expect(Over.test(sig, arguments)).toEqual(true);
+    args = ["str"];
+    expect(Over.test(sig, args)).toEqual(true);
 
-    var arguments = [0];
-    expect(Over.test(sig, arguments)).toEqual(false);
+    args = [0];
+    expect(Over.test(sig, args)).toEqual(false);
 
   });
 

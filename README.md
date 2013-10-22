@@ -1,5 +1,7 @@
 # over.js
 
+[![Build Status](https://travis-ci.org/floatdrop/over.js.png)](https://travis-ci.org/floatdrop/over.js)
+
 Elegant function overloading in JavaScript.
 
 ## Example

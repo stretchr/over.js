@@ -1,0 +1,30 @@
+{
+    "name": "over.js",
+    "version": "1.1.0",
+    "description": "Elegant funciton overloading in Javascript",
+    "main": "src/over.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/stretchr/over.js.git"
+    },
+    "keywords": [
+        "overload",
+        "optional",
+        "arguments"
+        ],
+    "author": "Mat Ryer <mat@stretchr.com>",
+    "license": "MIT",
+    "readmeFilename": "README.md",
+    "dependencies": {
+    
+    },
+    "devDependencies": {
+        "grunt": "*",
+        "grunt-jasmine-node": "*",
+        "grunt-contrib-jshint": "*",
+        "grunt-contrib-watch": "*"
+    },
+    "scripts": {
+        "test": "grunt"
+    }
+}
