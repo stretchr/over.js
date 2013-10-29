@@ -93,6 +93,7 @@
     "null": function(v){ return v === null; },
     "undefined": function(v){ return global.Over._isType("undefined", v); },
     "nothing": function(v){ return global.Over.is["null"](v) || global.Over.is["undefined"](v) },
+    "something": function(v){ return !global.Over.is["nothing"](v) },
     "etc": function(){ return global.Over.etc; }
   };
 
